@@ -4,7 +4,7 @@ ARG TAG_VERSION="stable-daily@sha256:7bb31fff29930e73fe52cee16779dcefcc52ae8b92c
 
 
 # Allow build scripts to be referenced without being copied into the final image
-FROM scratch AS ctx
+COPY build_files /build_files
 COPY build_files /
 
 
@@ -26,7 +26,7 @@ ARG IMAGE="bluefin"
 ARG SET_X=""
 ARG VERSION=""
 
-RUN /ctx/build.sh && \
+RUN /build_files/build.sh && \
     ostree container commit
 
 ### LINTING
