@@ -1,6 +1,7 @@
 ---
 name: Build Custom Image
 on:
+  merge_group:
   pull_request:
     branches:
       - main
