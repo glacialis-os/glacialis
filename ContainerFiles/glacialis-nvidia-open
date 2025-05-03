@@ -16,6 +16,13 @@ FROM ghcr.io/wayblueorg/sway-nvidia-open:latest
 COPY system_files/shared /
 COPY scripts /scripts
 
+ARG BASE_IMAGE_NAME="sway"
+ARG FEDORA_MAJOR-VERSION="42"
+ARG IMAGE_NAME="glacialis"
+ARG IMAGE_VENDOR="glacialis-os"
+ARG FEDORA_MAJOR_VERSION="42"
+ARG UBLUE_IMAGE_TAG="latest"
+ARG VERSION=""
 
 RUN /scripts/00-preconfigure.sh && \
     /scripts/01-image-info.sh && \

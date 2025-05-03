@@ -4,12 +4,12 @@
 
 set -ouex pipefail
 
-IMAGE_PRETTY_NAME="WinnieOS"
+IMAGE_PRETTY_NAME="GlacialisOS"
 IMAGE_LIKE="fedora"
 HOME_URL="https://winsdominoes.net"
-DOCUMENTATION_URL="https://github.winsdominoes/winnieos/wiki/"
-SUPPORT_URL="https://github.com/winsdominoes/winnieos/issues/"
-BUG_SUPPORT_URL="https://github.com/winsdominoes/winnieos/issues/"
+DOCUMENTATION_URL="https://github.com/glacialis-os/glacialis/wiki/"
+SUPPORT_URL="https://github.com/glacialis-os/glacialis/issues/"
+BUG_SUPPORT_URL="https://github.com/glacialis-os/glacialis/issues/"
 CODE_NAME="ChocolateChip"
 VERSION="${VERSION:-00.00000000}"
 
