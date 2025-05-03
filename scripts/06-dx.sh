@@ -16,3 +16,5 @@ dnf5 -y install \
 	docker-compose-plugin
 	
 dnf5 -y install android-tools
+
+systemctl enable docker.socket
