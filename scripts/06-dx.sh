@@ -7,7 +7,7 @@ dnf5 config-manager addrepo --from-repofile=https://packages.microsoft.com/yumre
 
 dnf5 -y --nogpgcheck  install code
 
-dnf5 -y config-manager addrepo --from-repofile=https://download.docker.com/linux/centos/docker-ce.repo
+dnf5 -y config-manager addrepo --from-repofile=https://download.docker.com/linux/fedora/docker-ce.repo
 dnf5 -y install \
 	docker-ce \
 	docker-ce-cli \
