@@ -12,7 +12,6 @@ programming_packages=(
   "gparted"
   "fastfetch"
   "ublue-brew"
-  "android-tools"
   "ptyxis"
 )
 
@@ -21,6 +20,7 @@ utility_packages=(
   "fuzzel"
   "i3blocks"
   "jetbrains-mono-fonts-all"
+  "tailscale"
 )
 
 dnf_packages=(
@@ -39,18 +39,6 @@ dnf5 copr disable -y ublue-os/packages
 dnf5 copr disable -y ublue-os/staging
 
 
-dnf5 config-manager --add-repo "https://packages.microsoft.com/yumrepos/vscode"
-dnf5 config-manager --set-disabled packages.microsoft.com_yumrepos_vscode
-dnf5 -y --enablerepo packages.microsoft.com_yumrepos_vscode --nogpgcheck  install code
-
-dnf5 config-manager --add-repo "https://download.docker.com/linux/centos/docker-ce.repo"
-dnf5 config-manager --set-disabled docker-ce-stable
-dnf5 -y --enablerepo docker-ce-stable install \
-	docker-ce \
-	docker-ce-cli \
-	containerd.io \
-	docker-buildx-plugin \
-	docker-compose-plugin
 
 
 
