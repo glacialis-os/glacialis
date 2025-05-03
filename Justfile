@@ -45,7 +45,6 @@ clean:
     rm -f previous.manifest.json
     rm -f changelog.md
     rm -f output.env
-    rm -f output/
 
 # Sudo Clean Repo
 [group('Utility')]
@@ -110,7 +109,7 @@ build $target_image=image_name $tag=default_tag $dx="0" $hwe="0" $gdx="0":
 
     BUILD_ARGS=()
     BUILD_ARGS+=("--build-arg" "MAJOR_VERSION=${centos_version}")
-    BUILD_ARGS+=("--build-arg" "IMAGE_NAME=${target_image}")
+    BUILD_ARGS+=("--build-arg" "IMAGE_NAME=${image_name}")
     BUILD_ARGS+=("--build-arg" "IMAGE_VENDOR=${repo_organization}")
     BUILD_ARGS+=("--build-arg" "ENABLE_DX=${dx}")
     BUILD_ARGS+=("--build-arg" "ENABLE_HWE=${hwe}")
@@ -158,13 +157,11 @@ _rootful_load_image $target_image=image_name $tag=default_tag:
     return_code=$?
     set -e
 
-    USER_IMG_ID=$(podman images --filter reference="${target_image}:${tag}" --format "'{{ '{{.ID}}' }}'")
-
     if [[ $return_code -eq 0 ]]; then
         # If the image is found, load it into rootful podman
         ID=$(just sudoif podman images --filter reference="${target_image}:${tag}" --format "'{{ '{{.ID}}' }}'")
-        if [[ "$ID" != "$USER_IMG_ID" ]]; then
-            # If the image ID is not found or different from user, copy the image from user podman to root podman
+        if [[ -z "$ID" ]]; then
+            # If the image ID is not found, copy the image from user podman to root podman
             COPYTMP=$(mktemp -p "${PWD}" -d -t _build_podman_scp.XXXXXXXXXX)
             just sudoif TMPDIR=${COPYTMP} podman image scp ${UID}@localhost::"${target_image}:${tag}" root@localhost::"${target_image}:${tag}"
             rm -rf "${COPYTMP}"
@@ -187,15 +184,21 @@ _build-bib $target_image $tag $type $config: (_rootful_load_image target_image t
     #!/usr/bin/env bash
     set -euo pipefail
 
-    args="--type ${type} "
-    args+="--use-librepo=True "
-    args+="--rootfs=btrfs"
+    mkdir -p "output"
 
-    if [[ $target_image == localhost/* ]]; then
-        args+=" --local"
+    echo "Cleaning up previous build"
+    if [[ $type == iso ]]; then
+      sudo rm -rf "output/bootiso" || true
+    else
+      sudo rm -rf "output/${type}" || true
     fi
 
-    BUILDTMP=$(mktemp -p "${PWD}" -d -t _build-bib.XXXXXXXXXX)
+    args="--type ${type} "
+    args+="--use-librepo=True"
+
+    if [[ $target_image == localhost/* ]]; then
+      args+=" --local"
+    fi
 
     sudo podman run \
       --rm \
@@ -205,16 +208,13 @@ _build-bib $target_image $tag $type $config: (_rootful_load_image target_image t
       --net=host \
       --security-opt label=type:unconfined_t \
       -v $(pwd)/${config}:/config.toml:ro \
-      -v $BUILDTMP:/output \
+      -v $(pwd)/output:/output \
       -v /var/lib/containers/storage:/var/lib/containers/storage \
       "${bib_image}" \
       ${args} \
       "${target_image}:${tag}"
 
-    mkdir -p output
-    sudo mv -f $BUILDTMP/* output/
-    sudo rmdir $BUILDTMP
-    sudo chown -R $USER:$USER output/
+    sudo chown -R $USER:$USER output
 
 # Podman builds the image from the Containerfile and creates a bootable image
 # Parameters:
@@ -289,8 +289,9 @@ _run-vm $target_image $tag $type $config:
     run_args+=(docker.io/qemux/qemu-docker)
 
     # Run the VM and open the browser to connect
-    (sleep 30 && xdg-open http://localhost:"$port") &
-    podman run "${run_args[@]}"
+    podman run "${run_args[@]}" &
+    xdg-open http://localhost:${port}
+    fg "%podman"
 
 # Run a virtual machine from a QCOW2 image
 [group('Run Virtal Machine')]
