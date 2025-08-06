@@ -1,4 +1,4 @@
-FROM ghcr.io/wayblueorg/sway-nvidia-open:latest
+FROM ghcr.io/ublue-os:main
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -30,5 +30,6 @@ RUN /scripts/00-preconfigure.sh && \
     /scripts/03-remove-packages.sh && \
     /scripts/04-enable-services.sh && \
     /scripts/05-just.sh && \
-    /scripts/07-cleanup.sh && \
+    /scripts/07-akmod.sh && \
+    /scripts/08-cleanup.sh && \
     ostree container commit

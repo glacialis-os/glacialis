@@ -6,7 +6,6 @@ set -ouex pipefail
 dnf5 copr enable -y swayfx/swayfx
 dnf5 copr enable -y ublue-os/packages
 dnf5 copr enable -y ublue-os/staging
-dnf5 -y remove sway
 
 programming_packages=(
   "gparted"
