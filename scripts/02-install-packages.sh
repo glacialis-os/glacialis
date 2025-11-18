@@ -23,6 +23,7 @@ utility_packages=(
   "swayfx"
   "fuzzel"
   "i3blocks"
+  "nemo"
   "gnome-disk-utility"
   "jetbrains-mono-fonts-all"
 )
