@@ -29,7 +29,7 @@ utility_packages=(
 )
 
 dnf_packages=(
-  ${programming_packages[@]}
+  ${core_packages[@]}
   ${utility_packages[@]}
 )
 
