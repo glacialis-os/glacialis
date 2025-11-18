@@ -7,19 +7,24 @@ dnf5 copr enable -y swayfx/swayfx
 dnf5 copr enable -y ublue-os/packages
 dnf5 copr enable -y ublue-os/staging
 
-programming_packages=(
+dnf config-manager addrepo --from-repofile=https://pkgs.tailscale.com/stable/fedora/tailscale.repo
+dnf config-manager setopt tailscale-stable.enabled=0
+dnf -y install --enablerepo='tailscale-stable' tailscale
+
+core_packages=(
   "gparted"
-  "fastfetch"
   "ublue-brew"
   "ptyxis"
+  "ublue-motd"
+  "uupd"
 )
 
 utility_packages=(
   "swayfx"
   "fuzzel"
   "i3blocks"
+  "gnome-disk-utility"
   "jetbrains-mono-fonts-all"
-  "tailscale"
 )
 
 dnf_packages=(
@@ -28,7 +33,7 @@ dnf_packages=(
 )
 
 # install rpms
-dnf5 install -y ${dnf_packages[@]} --skip-unavailable
+dnf5 install -y ${dnf_packages[@]} --skip-unavailable --install_weak_deps=false
 # install fzf-tab-completion
 
 # git clone https://github.com/lincheney/fzf-tab-completion.git /usr/share/ublue-os/fzf-tab-completion

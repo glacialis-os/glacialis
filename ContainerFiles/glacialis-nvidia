@@ -1,4 +1,4 @@
-FROM ghcr.io/ublue-os/base-main:latest
+FROM ghcr.io/blue-build/base-images/fedora-base-nvidia
 
 ## Other possible base images include:
 # FROM ghcr.io/ublue-os/bazzite:latest
@@ -14,7 +14,6 @@ FROM ghcr.io/ublue-os/base-main:latest
 ## the following RUN directive does all the things required to run "build.sh" as recommended.
     
 COPY system_files/shared /
-COPY system_files/dx /
 COPY scripts /scripts
 
 ARG BASE_IMAGE_NAME="sway"
@@ -31,7 +30,6 @@ RUN /scripts/00-preconfigure.sh && \
     /scripts/03-remove-packages.sh && \
     /scripts/04-enable-services.sh && \
     /scripts/05-just.sh && \
-    /scripts/06-dx.sh && \
     /scripts/07-akmod.sh && \
     /scripts/08-cleanup.sh && \
     ostree container commit
