@@ -11,6 +11,7 @@ programming_packages=(
   "gnome-tour"
   "malcontent-control"
   "qadwaitadecorations-qt5"
+  "gnome-remote-desktop"
 )
 
 packages=(
