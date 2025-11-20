@@ -17,6 +17,7 @@ core_packages=(
   "ptyxis"
   "ublue-motd"
   "uupd"
+  "sddm"
 )
 
 utility_packages=(
