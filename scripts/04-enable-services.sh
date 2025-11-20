@@ -10,6 +10,7 @@ systemctl enable brew-update.timer
 systemctl enable rpm-ostree-countme.service
 systemctl enable tailscaled.service
 systemctl enable uupd.timer
+systemctl disable gdm.service
 systemctl enable sddm.service
 
 systemctl disable rpm-ostreed-automatic.timer
