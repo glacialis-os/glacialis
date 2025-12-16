@@ -12,6 +12,8 @@ programming_packages=(
   "malcontent-control"
   "qadwaitadecorations-qt5"
   "gnome-remote-desktop"
+  "gdm"
+  "gnome-shell"
 )
 
 packages=(
