@@ -13,7 +13,6 @@ dnf -y install --enablerepo='tailscale-stable' tailscale
 
 core_packages=(
   "gparted"
-  "ublue-brew"
   "ptyxis"
   "ublue-motd"
   "uupd"

@@ -32,12 +32,13 @@ RUN find /tmp/akmods-common
 ## optionally install remove old and install new kernel
 # dnf -y remove --no-autoremove kernel kernel-core kernel-modules kernel-modules-core kernel-modules-extra
 ## install ublue support package and desired kmod(s)
-RUN dnf5 install -y /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm
-RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-v4l2loopback*.rpm
-RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-xone*.rpm
-RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-framework-laptop*.rpm
-RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-openrazer*.rpm
+RUN dnf5 install -y /tmp/akmods-common/rpms/ublue-os/ublue-os-akmods*.rpm --skip-broken
+RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-v4l2loopback*.rpm --skip-broken
+RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-xone*.rpm --skip-broken
+RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-framework-laptop*.rpm --skip-broken
+RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-openrazer*.rpm --skip-broken
 
+COPY --from=ghcr.io/projectbluefin/brew:latest /system_files /
 
 RUN /scripts/00-preconfigure.sh && \
     /scripts/01-image-info.sh && \
