@@ -39,7 +39,7 @@ RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-xone*.rpm --skip-broken
 RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-framework-laptop*.rpm --skip-broken
 RUN dnf5 install -y /tmp/akmods-common/rpms/kmods/kmod-openrazer*.rpm --skip-broken
 
-COPY --from=ghcr.io/projectbluefin/brew:latest /system_files /
+COPY --from=ghcr.io/ublue-os/brew:latest /system_files /
 
 RUN /scripts/00-preconfigure.sh && \
     /scripts/01-image-info.sh && \
